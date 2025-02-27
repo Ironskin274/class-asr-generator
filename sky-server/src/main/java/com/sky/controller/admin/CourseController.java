@@ -17,7 +17,7 @@ import java.util.List;
  * 课程管理
  */
 @RestController
-@RequestMapping("/admin/course")
+@RequestMapping("/course")
 @Slf4j
 @Api(tags = "课程相关接口")
 public class CourseController {

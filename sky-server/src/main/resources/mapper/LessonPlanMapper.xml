@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sky.mapper.LessonPlanMapper">
+
+    <!-- 添加教案 -->
+    <insert id="addLessonPlan" parameterType="com.sky.entity.LessonPlan">
+        INSERT INTO lesson_plan (lesson_plan_name, unit_id, teaching_content, teaching_method,
+        teaching_goal, teaching_key_point, teaching_difficult, introduction, explanation,
+        conclusion, expansion, creation_method, created_at, updated_at)
+        VALUES (#{lessonPlanName}, #{unitId}, #{teachingContent}, #{teachingMethod},
+        #{teachingGoal}, #{teachingKeyPoint}, #{teachingDifficult}, #{introduction},
+        #{explanation}, #{conclusion}, #{expansion}, #{creationMethod}, #{createdAt}, #{updatedAt})
+    </insert>
+
+    <!-- 根据单元ID查询教案列表 -->
+    <select id="getLessonPlanListByUnitId" resultType="com.sky.entity.LessonPlan">
+        SELECT * FROM lesson_plan WHERE unit_id = #{unitId}
+    </select>
+
+    <!-- 根据教案ID查询教案详情 -->
+    <select id="getLessonPlanById" resultType="com.sky.entity.LessonPlan">
+        SELECT * FROM lesson_plan WHERE id = #{lessonPlanId}
+    </select>
+
+    <!-- 更新教案信息 -->
+    <update id="updateLessonPlan" parameterType="com.sky.entity.LessonPlan">
+        UPDATE lesson_plan
+        SET lesson_plan_name = #{lessonPlanName}, unit_id = #{unitId}, teaching_content = #{teachingContent},
+        teaching_method = #{teachingMethod}, teaching_goal = #{teachingGoal}, teaching_key_point = #{teachingKeyPoint},
+        teaching_difficult = #{teachingDifficult}, introduction = #{introduction}, explanation = #{explanation},
+        conclusion = #{conclusion}, expansion = #{expansion}, creation_method = #{creationMethod}, updated_at = #{updatedAt}
+        WHERE id = #{id}
+    </update>
+
+    <!-- 删除教案 -->
+    <delete id="deleteLessonPlanByIds">
+        DELETE FROM lesson_plan WHERE id IN
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        AND user_id = #{userId}
+    </delete>
+
+</mapper>

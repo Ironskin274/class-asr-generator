@@ -25,9 +25,9 @@ import java.util.Map;
  * 员工管理
  */
 @RestController
-@RequestMapping("/admin/user")
+@RequestMapping("/user")
 @Slf4j
-@Api(tags = "员工相关接口")
+@Api(tags = "用户相关接口")
 public class UserController {
 
     @Autowired
@@ -41,10 +41,10 @@ public class UserController {
      * @param userLoginDTO
      * @return
      */
-    @ApiOperation(value="员工登录")
+    @ApiOperation(value="用户登录")
     @PostMapping("/login")
     public Result<UserLoginVO> login(@RequestBody UserLoginDTO userLoginDTO) {
-        log.info("员工登录：{}", userLoginDTO);
+        log.info("用户登录：{}", userLoginDTO);
 
         User user = userService.login(userLoginDTO);
 
@@ -71,7 +71,7 @@ public class UserController {
      *
      * @return
      */
-    @ApiOperation(value = "员工退出")
+    @ApiOperation(value = "用户退出")
     @PostMapping("/logout")
     public Result<String> logout() {
         return Result.success();
@@ -83,7 +83,7 @@ public class UserController {
      * @return
      */
     @PostMapping
-    @ApiOperation("新增员工")
+    @ApiOperation("新增用户")
     //result封装返回值
     public Result save(@RequestBody UserDTO userDTO) {
         log.info("新增员工：{}", userDTO);

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sky.mapper.UnitMapper">
+
+    <!-- 添加单元 -->
+    <insert id="addUnit" parameterType="com.sky.entity.Unit">
+        INSERT INTO unit (unit_name, course_id, created_at, updated_at)
+        VALUES (#{unitName}, #{courseId}, #{createdAt}, #{updatedAt})
+    </insert>
+
+    <!-- 根据课程ID查询单元列表 -->
+    <select id="getUnitListByCourseId" resultType="com.sky.entity.Unit">
+        SELECT * FROM unit WHERE course_id = #{courseId}
+    </select>
+
+    <!-- 根据单元ID查询单元详情 -->
+    <select id="getUnitById" resultType="com.sky.entity.Unit">
+        SELECT * FROM unit WHERE id = #{unitId}
+    </select>
+
+    <!-- 更新单元信息 -->
+    <update id="updateUnit" parameterType="com.sky.entity.Unit">
+        UPDATE unit
+        SET unit_name = #{unitName}, course_id = #{courseId}, updated_at = #{updatedAt}
+        WHERE id = #{id}
+    </update>
+
+    <!-- 删除单元 -->
+    <delete id="deleteUnit">
+        DELETE FROM unit WHERE id = #{unitId}
+    </delete>
+
+    <!-- 查询单元是否关联教案 -->
+    <select id="countByUnitId" resultType="int">
+        SELECT COUNT(*) FROM lesson_plan WHERE unit_id = #{unitId}
+    </select>
+
+</mapper>

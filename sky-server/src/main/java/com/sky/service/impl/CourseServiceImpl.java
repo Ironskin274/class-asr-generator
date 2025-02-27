@@ -77,8 +77,11 @@ public class CourseServiceImpl implements CourseService{
     @Override
     public void deleteCourse(Long userId, List<Long> ids) {
         for (Long id : ids) {
-            getCourseById(userId, id); // 验证课程是否存在
-            courseMapper.deleteCourse(id, userId);
+            Long courseId = id;
+            getCourseById(userId, courseId); // 验证课程是否存在
+            System.out.println(userId+id);
+
+            courseMapper.deleteCourse(courseId, userId);
         }
     }
 
