@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.sky.mapper.CourseMapper">
+
+    <!-- 查询指定用户的课程列表 -->
+    <select id="getCourseListByUser" resultType="com.sky.entity.Course">
+        SELECT * FROM course WHERE user_id = #{userId} LIMIT #{offset}, #{size}
+    </select>
+
+    <!-- 根据课程ID查询课程 -->
+    <select id="getCourseById" resultType="com.sky.entity.Course">
+        SELECT * FROM course WHERE id = #{id} AND user_id = #{userId}
+    </select>
+
+    <!-- 新增课程 -->
+    <insert id="addCourse" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO course (course_name, course_code, course_target, course_type, credit_hours, credits, status, user_id, created_at, updated_at)
+        VALUES (#{courseName}, #{courseCode}, #{courseTarget}, #{courseType}, #{creditHours}, #{credits}, #{status}, #{userId}, NOW(), NOW())
+    </insert>
+
+    <!-- 更新课程 -->
+    <update id="updateCourse">
+        UPDATE course
+        SET course_name = #{courseName},
+            course_code = #{courseCode},
+            course_target = #{courseTarget},
+            course_type = #{courseType},
+            credit_hours = #{creditHours},
+            credits = #{credits},
+            status = #{status},
+            updated_at = NOW()
+        WHERE id = #{id} AND user_id = #{userId}
+    </update>
+    <update id="changeCourseStatus">
+        UPDATE course
+        SET status = #{status}
+        WHERE id = #{id} AND user_id = #{userId}
+
+    </update>
+
+    <!-- 删除课程 -->
+    <delete id="deleteCourse">
+        DELETE FROM course WHERE id = #{id} AND user_id = #{userId}
+    </delete>
+
+</mapper>
+
