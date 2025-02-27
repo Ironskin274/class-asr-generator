@@ -51,7 +51,6 @@ public class CourseServiceImpl implements CourseService{
         course.setCreditHours(courseDTO.getCreditHours());
         course.setCredits(courseDTO.getCredits());
         course.setUserId(userId);
-
         courseMapper.addCourse(course);
     }
 

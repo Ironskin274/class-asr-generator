@@ -1,5 +1,6 @@
 package com.sky.controller.admin;
 
+import com.sky.context.BaseContext;
 import com.sky.dto.CourseDTO;
 import com.sky.entity.Course;
 import com.sky.result.Result;
@@ -32,10 +33,12 @@ public class CourseController {
      * @return 课程列表
      */
     @ApiOperation(value = "查询课程列表")
-    @GetMapping("/list")
+    @GetMapping("/page")
     public Result<List<Course>> getCourseList(@RequestParam int page, @RequestParam int size) {
         log.info("查询课程列表：page={}, size={}", page, size);
-        List<Course> courses = courseService.getCourseList(page, size);
+        Long userId = BaseContext.getCurrentId();
+        List<Course> courses = courseService.getCourseList(userId,page, size);
+        log.info("查询课程：{}", courses);
         return Result.success(courses);
     }
 
@@ -49,7 +52,8 @@ public class CourseController {
     @GetMapping("/{id}")
     public Result<Course> getCourseById(@PathVariable Long id) {
         log.info("查询课程详情：id={}", id);
-        Course course = courseService.getCourseById(id);
+        Long userId = BaseContext.getCurrentId();
+        Course course = courseService.getCourseById(id,userId);
         return Result.success(course);
     }
 
@@ -64,7 +68,8 @@ public class CourseController {
     public Result<String> addCourse(@RequestBody CourseDTO courseDTO) {
         System.out.println("123");
         log.info("新增课程：{}", courseDTO);
-        courseService.addCourse(courseDTO);
+        Long userId = BaseContext.getCurrentId();
+        courseService.addCourse(courseDTO, userId);
         return Result.success("课程添加成功");
     }
 
@@ -78,7 +83,8 @@ public class CourseController {
     @PutMapping
     public Result<String> updateCourse(@RequestBody CourseDTO courseDTO) {
         log.info("修改课程信息：{}", courseDTO);
-        courseService.updateCourse(courseDTO);
+        Long userId = BaseContext.getCurrentId();
+        courseService.updateCourse(courseDTO,userId);
         return Result.success("课程信息更新成功");
     }
 
@@ -92,7 +98,8 @@ public class CourseController {
     @DeleteMapping
     public Result<String> deleteCourse(@RequestParam List<Long> ids) {
         log.info("删除课程：ids={}", ids);
-        courseService.deleteCourse(ids);
+        Long userId = BaseContext.getCurrentId();
+        courseService.deleteCourse(userId,ids);
         return Result.success("课程删除成功");
     }
 
@@ -107,7 +114,8 @@ public class CourseController {
     @PostMapping("/status")
     public Result<String> changeCourseStatus(@RequestParam List<Long> ids, @RequestParam String status) {
         log.info("批量修改课程状态：ids={}, status={}", ids, status);
-        courseService.changeCourseStatus(ids, status);
+        Long userId = BaseContext.getCurrentId();
+        courseService.changeCourseStatus(userId,ids, status);
         return Result.success("课程状态修改成功");
     }
 
