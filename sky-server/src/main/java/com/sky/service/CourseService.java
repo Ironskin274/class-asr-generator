@@ -6,6 +6,9 @@ import com.sky.entity.Course;
 import java.util.List;
 
 public interface CourseService {
+
+    List<Course> getAllCourses(Long userId);
+
     List<Course> getCourseList(Long userId, int page, int size);
 
     Course getCourseById(Long userId, Long courseId);

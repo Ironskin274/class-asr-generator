@@ -43,6 +43,19 @@ public class CourseController {
     }
 
     /**
+     * 获取所有课程
+     * @return
+     */
+    @ApiOperation(value = "获取所有课程")
+    @GetMapping("/all")
+    public Result<List<Course>> getAllCourses() {
+        log.info("获取所有课程");
+        Long userId = BaseContext.getCurrentId();
+        List<Course> courses = courseService.getAllCourses(userId);
+        return Result.success(courses);
+    }
+
+    /**
      * 查询课程详情
      *
      * @param id 课程ID

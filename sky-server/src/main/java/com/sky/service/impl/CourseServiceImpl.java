@@ -18,6 +18,17 @@ public class CourseServiceImpl implements CourseService{
     private CourseMapper courseMapper;
 
     /**
+     * 获得所有课程
+     * @param userId
+     * @return
+     */
+
+    @Override
+    public List<Course> getAllCourses(Long userId) {
+        return courseMapper.getAllCourses(userId);
+    }
+
+    /**
      * 查询课程列表（分页，按用户 ID）
      */
     @Override

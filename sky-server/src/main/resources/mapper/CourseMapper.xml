@@ -4,6 +4,11 @@
 
 <mapper namespace="com.sky.mapper.CourseMapper">
 
+    <!-- 获取所有课程 -->
+    <select id="getAllCourses" resultType="com.sky.entity.Course">
+        SELECT * FROM course WHERE user_id = #{userId}
+    </select>
+
     <!-- 查询指定用户的课程列表 -->
     <select id="getCourseListByUser" resultType="com.sky.entity.Course">
         SELECT * FROM course WHERE user_id = #{userId} LIMIT #{offset}, #{size}
