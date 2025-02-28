@@ -8,6 +8,10 @@ import com.sky.service.LessonPlanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -15,6 +19,8 @@ public class LessonPlanServiceImpl implements LessonPlanService {
 
     @Autowired
     private LessonPlanMapper lessonPlanMapper;
+
+    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     /**
      * 创建教案（为特定单元添加）
@@ -34,11 +40,11 @@ public class LessonPlanServiceImpl implements LessonPlanService {
         lessonPlan.setConclusion(lessonPlanDTO.getConclusion());
         lessonPlan.setExpansion(lessonPlanDTO.getExpansion());
         lessonPlan.setCreationMethod(lessonPlanDTO.getCreationMethod());
-        lessonPlan.setCreatedAt(String.valueOf(System.currentTimeMillis())); // 设置创建时间
-        lessonPlan.setUpdatedAt(String.valueOf(System.currentTimeMillis())); // 设置更新时间
+        String currentDateTime = getCurrentDateTimeString();
+        lessonPlan.setCreatedAt(currentDateTime); // 设置创建时间
+        lessonPlan.setUpdatedAt(currentDateTime); // 设置更新时间
         lessonPlanMapper.addLessonPlan(lessonPlan);
     }
-
 
     /**
      * 获取单元下的所有教案
@@ -79,7 +85,7 @@ public class LessonPlanServiceImpl implements LessonPlanService {
         lessonPlan.setConclusion(lessonPlanDTO.getConclusion());
         lessonPlan.setExpansion(lessonPlanDTO.getExpansion());
         lessonPlan.setCreationMethod(lessonPlanDTO.getCreationMethod());
-        lessonPlan.setUpdatedAt(String.valueOf(System.currentTimeMillis())); // 更新时间
+        lessonPlan.setUpdatedAt(getCurrentDateTimeString()); // 更新时间
         lessonPlanMapper.updateLessonPlan(lessonPlan);
     }
 
@@ -89,5 +95,16 @@ public class LessonPlanServiceImpl implements LessonPlanService {
     @Override
     public void deleteLessonPlan(List<Long> ids) {
         lessonPlanMapper.deleteLessonPlanByIds(ids);
+    }
+
+    /**
+     * 获取当前时间的字符串表示，格式为 yyyy-MM-dd HH:mm:ss
+     * @return 当前时间的字符串表示
+     */
+    private String getCurrentDateTimeString() {
+        LocalDateTime localDateTime = Instant.ofEpochMilli(System.currentTimeMillis())
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime();
+        return localDateTime.format(DATE_TIME_FORMATTER);
     }
 }
