@@ -1,8 +1,8 @@
-package com.sky.controller;
+package com.sky.controller.admin;
 
 import com.sky.result.Result;
 import com.sky.service.LessonPlanService;
-//import com.sky.utils.AudioToTextUtil;
+import com.sky.utils.AudioToTextUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
